@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+
+    <!--优先加载Properties属性文件，用于后面bean的注解,多个文件用逗号隔开-->
+    <context:property-placeholder location="classpath:config.properties"/>
+
+    <!--1. 扫描注解，这里过滤掉SpringMVC的注解-->
+    <context:component-scan base-package="com.qs.quartz">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <bean id="schedulerFactoryBean"
+          class="org.springframework.scheduling.quartz.SchedulerFactoryBean" />
+
+    <import resource="classpath:spring/spring-mybatis.xml"/>
+    <import resource="classpath:spring/spring-transaction.xml"/>
+    <!-- 定时任务 -->
+     <!--<import resource="classpath:spring/spring-quartz.xml"/>-->
+     <!--<import resource="classpath:spring/spring-aop.xml"/>-->
+</beans>

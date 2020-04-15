@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qs.quartz.service.mapper.TaskScheduleMapper">
+    <!-- 自定义返回结果集 -->
+    <resultMap id="BaseResultMap" type="TaskSchedule">
+        <id property="jobId" column="job_id"/>
+        <result property="jobName" column="job_name"/>
+        <result property="jobGroup" column="job_group"/>
+        <result property="cronExpression" column="cron_expression"/>
+        <result property="springId" column="spring_id"/>
+        <result property="beanClass" column="bean_class"/>
+        <result property="methodName" column="method_name"/>
+        <result property="jobStatus" column="job_status"/>
+        <result property="isConcurrent" column="is_concurrent"/>
+        <result property="description" column="description"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+</mapper>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qs.quartz.service.mapper.TaskScheduleDetailMapper">
+    <!-- 自定义返回结果集 -->
+    <resultMap id="BaseResultMap" type="TaskScheduleDetail">
+        <id property="detailId" column="detail_id"/>
+        <result property="jobId" column="job_id"/>
+        <result property="startTime" column="start_time"/>
+        <result property="endTime" column="end_time"/>
+        <result property="totalExecuteTime" column="total_execute_time"/>
+        <result property="executeStatus" column="execute_status"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+</mapper>
