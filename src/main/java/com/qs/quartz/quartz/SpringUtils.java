@@ -2,6 +2,7 @@ package com.qs.quartz.quartz;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
+import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.stereotype.Component;
@@ -60,5 +61,9 @@ public final class SpringUtils implements BeanFactoryPostProcessor {
      */
     public static String[] getAliases(String name) throws NoSuchBeanDefinitionException {
         return beanFactory.getAliases(name);
+    }
+
+    public static BeanDefinition getBeanDefination(String beanName) {
+        return beanFactory.getBeanDefinition(beanName);
     }
 }
