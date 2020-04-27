@@ -20,6 +20,5 @@ public class MyQuartzServiceImpl implements QuartzService {
         User user = new User();
         user.setUserName("bbb");
         userService.updateById(user);
-        int i = 1/0;
     }
 }
