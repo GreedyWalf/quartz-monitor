@@ -1,4 +1,4 @@
-package com.qs.quartz.quartz;
+package com.qs.quartz.utils;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;

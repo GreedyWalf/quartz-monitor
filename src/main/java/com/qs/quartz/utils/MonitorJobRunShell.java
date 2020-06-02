@@ -1,6 +1,5 @@
 package com.qs.quartz.utils;
 
-import com.qs.quartz.quartz.SpringUtils;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.core.JobRunShell;
