@@ -30,7 +30,7 @@ public class TaskSchedule implements Serializable {
     //0-未启动，1-已启动
     private String jobStatus;
 
-    //是否等待上个任务完成（0-等待，1-不等待）
+    //是否支持并发执行（0-不支持，1-支持）
     private String isConcurrent;
 
     private String description;

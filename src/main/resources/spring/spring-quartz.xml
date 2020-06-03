@@ -3,6 +3,26 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="schedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean"/>
+    <!-- 定时任务入口 -->
+    <bean id="schedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="schedulerFactoryClass" value="org.quartz.impl.StdSchedulerFactory"/>
+        <property name="triggers">
+            <list>
+                <ref bean="myTrigger"/>
+            </list>
+        </property>
+    </bean>
 
+    <!-- 2、定义触发器 -->
+    <bean id="myTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="myJobDetail"/>
+        <property name="cronExpression" value="0/3 * * * * ?"/>
+    </bean>
+
+    <!-- 3、定义执行任务详情 -->
+    <bean id="myJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="myQuartzService"/>
+        <property name="targetMethod" value="test"/>
+        <property name="concurrent" value="true"/>
+    </bean>
 </beans>
