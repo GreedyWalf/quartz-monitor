@@ -16,10 +16,29 @@
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
-
-    <!--  配置视图解析器  -->
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/pages/"/>
-        <property name="suffix" value=".jsp"/>
+    <!--FreeMarker配置，在spring解析view的时候会指定对应的路径，然后同时拼上viewResolver中的前后缀-->
+    <bean id="freeMarkerConfigurer" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <property name="templateLoaderPath" value="/template/"/>
+        <property name="freemarkerSettings">
+            <props>
+                <prop key="defaultEncoding">UTF-8</prop>
+            </props>
+        </property>
     </bean>
+
+    <!-- 把逻辑视图名称映射到真正视图上 -->
+    <bean id="freeMarkerViewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <property name="suffix" value=".ftl"/>
+        <property name="contentType" value="text/html;charset=UTF-8"/>
+        <!-- 此变量值为pageContext.request, 页面使用方法：Request.contextPath -->
+        <property name="requestContextAttribute" value="Request"/>
+    </bean>
+
+    <!--静态资源路径映射，逻辑静态资源映射到物理静态资源映射-->
+    <mvc:resources mapping="/static/**" location="/static/"/>
+    <mvc:resources mapping="/css/**" location="/static/css/"/>
+    <mvc:resources mapping="/js/**" location="/static/js/"/>
+    <mvc:resources mapping="/images/**" location="/static/images/"/>
+    <mvc:resources mapping="/fonts/**" location="/static/fonts/"/>
+    <mvc:resources mapping="/template/**" location="/template/"/>
 </beans>

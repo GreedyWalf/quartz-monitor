@@ -169,11 +169,6 @@
             <artifactId>quartz</artifactId>
             <version>1.8.5</version>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.quartz-scheduler</groupId>-->
-            <!--<artifactId>quartz-jobs</artifactId>-->
-            <!--<version>1.8.5</version>-->
-        <!--</dependency>-->
 
         <!-- dom4j解析xml -->
         <dependency>
@@ -194,6 +189,12 @@
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
             <version>1.8.9</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>2.3.21</version>
         </dependency>
 
         <!-- logback start -->
