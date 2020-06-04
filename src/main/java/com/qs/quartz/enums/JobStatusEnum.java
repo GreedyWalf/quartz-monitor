@@ -8,10 +8,8 @@ package com.qs.quartz.enums;
  */
 public enum JobStatusEnum {
 
-    STATUS_NOT_START("0", "未启动"),
-    STATUS_RUNNABLE("1", "运行中"),
-    STATUS_PAUSEED("2", "已暂停");
-
+    STATUS_RUNNABLE("0", "运行中"),
+    STATUS_PAUSE("1", "已暂停");
 
     private String code;
 

@@ -1,6 +1,6 @@
 package com.qs.quartz.quartz.job;
 
-import com.qs.quartz.entity.TaskSchedule;
+import com.qs.quartz.entity.TaskScheduler;
 import com.qs.quartz.utils.TaskUtils;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -19,7 +19,7 @@ public class StatefulJobBean extends QuartzJobBean implements StatefulJob {
 
     @Override
     protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        TaskSchedule taskSchedule = (TaskSchedule) jobExecutionContext.getMergedJobDataMap().get("taskSchedule");
-        TaskUtils.invokeMethod(taskSchedule);
+        TaskScheduler taskScheduler = (TaskScheduler) jobExecutionContext.getMergedJobDataMap().get("taskScheduler");
+        TaskUtils.invokeMethod(taskScheduler);
     }
 }

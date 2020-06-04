@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.qs.quartz.service.mapper.TaskScheduleMapper">
+<mapper namespace="com.qs.quartz.service.mapper.TaskSchedulerMapper">
     <!-- 自定义返回结果集 -->
-    <resultMap id="BaseResultMap" type="TaskSchedule">
+    <resultMap id="BaseResultMap" type="TaskScheduler">
         <id property="jobId" column="job_id"/>
         <result property="jobName" column="job_name"/>
         <result property="jobGroup" column="job_group"/>
@@ -17,4 +17,19 @@
         <result property="updateTime" column="update_time"/>
     </resultMap>
 
+
+    <select id="getTaskSchedulerrList" resultMap="BaseResultMap">
+      select * from task_scheduler
+      <where>
+          1=1
+          <if test="taskScheduler.jobName!=null and taskScheduler.jobName!=''">
+              and job_name like CONCAT('%',#{taskScheduler.jobName},'%')
+          </if>
+          <if test="taskScheduler.jobStatus!=null and taskScheduler.jobStatus!=''">
+              and job_status=#{taskScheduler.jobStatus}
+          </if>
+      </where>
+
+      order by create_time desc
+    </select>
 </mapper>

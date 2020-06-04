@@ -1,6 +1,6 @@
 package com.qs.quartz.utils;
 
-import com.qs.quartz.entity.TaskSchedule;
+import com.qs.quartz.entity.TaskScheduler;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,14 +11,14 @@ public class TaskUtils {
 
     private static Logger logger = LoggerFactory.getLogger(TaskUtils.class);
 
-    public static void invokeMethod(TaskSchedule taskSchedule) {
+    public static void invokeMethod(TaskScheduler taskScheduler) {
         Object object = null;
         Class clazz = null;
-        if (StringUtils.isNotBlank(taskSchedule.getSpringId())) {
-            object = SpringUtils.getBean(taskSchedule.getSpringId());
-        } else if (StringUtils.isNotBlank(taskSchedule.getBeanClass())) {
+        if (StringUtils.isNotBlank(taskScheduler.getSpringId())) {
+            object = SpringUtils.getBean(taskScheduler.getSpringId());
+        } else if (StringUtils.isNotBlank(taskScheduler.getBeanClass())) {
             try {
-                clazz = Class.forName(taskSchedule.getBeanClass());
+                clazz = Class.forName(taskScheduler.getBeanClass());
                 object = clazz.newInstance();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -32,9 +32,9 @@ public class TaskUtils {
         clazz = object.getClass();
         Method method = null;
         try {
-            method = clazz.getDeclaredMethod(taskSchedule.getMethodName());
+            method = clazz.getDeclaredMethod(taskScheduler.getMethodName());
         } catch (NoSuchMethodException e) {
-            logger.error("未获取到任务方法，jobName={}", taskSchedule.getJobName());
+            logger.error("未获取到任务方法，jobName={}", taskScheduler.getJobName());
         } catch (SecurityException e) {
             e.printStackTrace();
         }
@@ -47,6 +47,6 @@ public class TaskUtils {
             }
         }
 
-        logger.info("任务执行结束，jobName={}", taskSchedule.getJobName());
+        logger.info("任务执行结束，jobName={}", taskScheduler.getJobName());
     }
 }

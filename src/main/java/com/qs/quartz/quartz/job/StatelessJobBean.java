@@ -1,7 +1,7 @@
 package com.qs.quartz.quartz.job;
 
 
-import com.qs.quartz.entity.TaskSchedule;
+import com.qs.quartz.entity.TaskScheduler;
 import com.qs.quartz.utils.TaskUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -19,7 +19,7 @@ public class StatelessJobBean extends QuartzJobBean {
 
     @Override
     protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        TaskSchedule taskSchedule = (TaskSchedule) jobExecutionContext.getMergedJobDataMap().get("taskSchedule");
-        TaskUtils.invokeMethod(taskSchedule);
+        TaskScheduler taskScheduler = (TaskScheduler) jobExecutionContext.getMergedJobDataMap().get("taskScheduler");
+        TaskUtils.invokeMethod(taskScheduler);
     }
 }

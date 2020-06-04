@@ -1,7 +1,7 @@
 package com.qs.quartz.quartz;
 
-import com.qs.quartz.entity.TaskSchedule;
-import com.qs.quartz.service.TaskScheduleService;
+import com.qs.quartz.entity.TaskScheduler;
+import com.qs.quartz.service.TaskSchedulerService;
 import org.quartz.SchedulerException;
 import org.springframework.stereotype.Component;
 
@@ -20,18 +20,18 @@ import java.util.List;
 public class QuartzSchedulerStarter {
 
     @Resource
-    private TaskScheduleService taskScheduleService;
+    private TaskSchedulerService taskSchedulerService;
 
 
     /**
-     * 注入bean时执行，加载task_schedule表中配置的所有的定时任务
+     * 注入bean时执行，加载task_scheduler表中配置的所有的定时任务
      */
     @PostConstruct
     public void init() throws SchedulerException, ParseException {
-        List<TaskSchedule> taskScheduleList = taskScheduleService.getAllTaskList();
-        for (TaskSchedule taskSchedule : taskScheduleList) {
+        List<TaskScheduler> taskSchedulerList = taskSchedulerService.getAllTaskList();
+        for (TaskScheduler taskScheduler : taskSchedulerList) {
             //将任务添加到scheduler执行
-            taskScheduleService.addJob(taskSchedule);
+            taskSchedulerService.addJob(taskScheduler);
         }
     }
 
