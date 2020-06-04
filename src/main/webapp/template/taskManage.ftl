@@ -33,10 +33,9 @@
     <button class="layui-btn" data-type="reload" id="search">搜索</button>
 
     <div class="layui-row" style="margin-top: 20px;">
-        <input type="button" class="layui-btn layui-btn-sm" id="btnAddArticle" value="新增"/>
-        <input type="button" class="layui-btn layui-btn-normal layui-btn-sm" id="btnPreviewArticle" value="修改"/>
-        <input type="button" class="layui-btn layui-btn-danger layui-btn-sm" id="btnDisableArticle" value="禁用"/>
-        <input type="button" class="layui-btn layui-btn-danger layui-btn-sm" id="btnDeleteArticle" value="删除"/>
+        <input type="button" class="layui-btn layui-btn-sm" id="btnAdd" value="新增"/>
+        <input type="button" class="layui-btn layui-btn-normal layui-btn-sm" id="btnModify" value="修改"/>
+        <input type="button" class="layui-btn layui-btn-danger layui-btn-sm" id="btnDelete" value="删除"/>
     </div>
 
     <div class="layui-tab-content">
@@ -78,7 +77,7 @@
         table.render({
             elem: '#allArticleListTb',
             height: 500,
-            url: '${ctx}/getTaskSchedulerrList',
+            url: '${ctx}/getTaskSchedulerList',
             page: true,
             cols: [[
                 {checkbox: true, fiexed: true, unresize: true},
@@ -152,6 +151,73 @@
                     'createStartTime': createStartTime,
                     'createEndTime': createEndTime,
                     'jobName': jobName
+                }
+            });
+        });
+
+
+        //新增
+        $("#btnAdd").on('click', function () {
+            layer.open({
+                title: '添加任务',
+                type: 2,
+                anim: 1,
+                area: ['700px', '600px'],
+                content: '${ctx}/showTaskForm',
+                resize: false,
+                cancel: function () {
+                    console.log("-->取消了");
+                }
+            });
+        });
+
+        //修改用户
+        $("#btnModify").on('click', function () {
+            if (selectJobIds == null || selectJobIds.length <= 0) {
+                layer.msg('请选择一行记录', {icon: 2});
+                return false;
+            }
+
+            if (selectJobIds.length > 1) {
+                layer.msg('只能选择一行记录', {icon: 2});
+                return false;
+            }
+
+            layer.open({
+                title: '修改用户',
+                type: 2,
+                anim: 1,
+                area: ['700px', '600px'],
+                content: '${ctx}/showTaskForm?jobId=' + selectJobIds[0],
+                resize: false,
+                cancel: function () {
+                    console.log("-->取消了");
+                }
+            });
+        });
+
+
+        //删除用户
+        $("#btnDelete").on('click', function () {
+            if (selectJobIds == null || selectJobIds.length === 0) {
+                layer.msg('请勾选需要删除的记录', {icon: 2});
+                return false;
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '${ctx}/delete',
+                contentType: "application/x-www-form-urlencoded",
+                data: {"jobIds": selectJobIds.join(",")},
+                success: function (data) {
+                    console.log(data);
+                    if (data && data.status === "SUCCESS") {
+                        layer.msg('删除成功！', {icon: 1, time: 2000}, function () {
+                            $("#search").click();
+                        });
+                    } else {
+                        layer.msg(data.msg || '删除出现错误！', {icon: 2, time: 2000});
+                    }
                 }
             });
         });

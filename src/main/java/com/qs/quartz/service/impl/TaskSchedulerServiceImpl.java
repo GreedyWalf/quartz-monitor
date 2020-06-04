@@ -28,7 +28,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
-import java.util.Arrays;
 import java.util.List;
 
 @Service("taskSchedulerService")
@@ -88,9 +87,9 @@ public class TaskSchedulerServiceImpl extends ServiceImpl<TaskSchedulerMapper, T
 
     @Override
     @Transactional
-    public Page<TaskScheduler> getTaskSchedulerrList(Page<TaskScheduler> page, TaskScheduler taskScheduler) {
+    public Page<TaskScheduler> getTaskSchedulerList(Page<TaskScheduler> page, TaskScheduler taskScheduler) {
         PageHelper.startPage(page.getPageNum(), page.getPageSize());
-        return taskSchedulerMapper.getTaskSchedulerrList(taskScheduler);
+        return taskSchedulerMapper.getTaskSchedulerList(taskScheduler);
     }
 
 
@@ -125,9 +124,8 @@ public class TaskSchedulerServiceImpl extends ServiceImpl<TaskSchedulerMapper, T
 
     @Transactional
     @Override
-    public JsonResult batchDeleteByJobIds(String[] jobIds) {
+    public JsonResult batchDeleteByJobIds(List<String> jobIdList) {
         JsonResult jsonResult = new JsonResult();
-        List<String> jobIdList = Arrays.asList(jobIds);
         QueryWrapper<TaskScheduler> queryWrapper = new QueryWrapper<>();
         queryWrapper.in("job_id", jobIdList);
         List<TaskScheduler> taskSchedulerList = taskSchedulerMapper.selectList(queryWrapper);

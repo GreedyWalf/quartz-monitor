@@ -28,7 +28,7 @@ public class TaskScheduler implements Serializable {
 
     private String methodName;
 
-    //0-运行中，1-已暂停，2-已停止
+    //0-运行中，1-已暂停
     private String jobStatus;
 
     //是否支持并发执行（0-不支持，1-支持）

@@ -10,6 +10,6 @@ import java.util.List;
 public interface TaskSchedulerMapper extends BaseMapper<TaskScheduler> {
 
 
-    Page<TaskScheduler> getTaskSchedulerrList(@Param("taskScheduler") TaskScheduler taskScheduler);
+    Page<TaskScheduler> getTaskSchedulerList(@Param("taskScheduler") TaskScheduler taskScheduler);
 
 }

@@ -21,10 +21,10 @@ public interface TaskSchedulerService extends IService<TaskScheduler> {
      */
     void addJob(TaskScheduler taskScheduler) throws SchedulerException, ParseException;
 
-    Page<TaskScheduler> getTaskSchedulerrList(Page<TaskScheduler> page, TaskScheduler taskScheduler);
+    Page<TaskScheduler> getTaskSchedulerList(Page<TaskScheduler> page, TaskScheduler taskScheduler);
 
     JsonResult saveOrUpdateJob(TaskScheduler taskScheduler);
 
-    JsonResult batchDeleteByJobIds(String[] jobIds);
+    JsonResult batchDeleteByJobIds(List<String> jobIdList);
 
 }

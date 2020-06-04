@@ -30,11 +30,11 @@ public class TestMb extends BaseTest {
         taskScheduler.setJobGroup("test2Group");
         taskScheduler.setJobStatus(JobStatusEnum.STATUS_RUNNABLE.getCode());
         taskScheduler.setIsConcurrent(JobConcurrentStateEnum.CONCURRENT_TRUE.getCode());
-        taskScheduler.setCronExpression("0/2 * * * * ?");
+        taskScheduler.setCronExpression("0/5 * * * * ?");
         taskScheduler.setSpringId("myQuartzService");
         taskScheduler.setBeanClass("com.qs.quartz.service.impl.MyQuartzServiceImpl");
-        taskScheduler.setMethodName("test");
-        taskScheduler.setDescription("2s执行一次");
+        taskScheduler.setMethodName("test2");
+        taskScheduler.setDescription("5s执行一次");
         taskScheduler.setCreateTime(new Date());
         taskSchedulerMapper.insert(taskScheduler);
     }
@@ -42,7 +42,7 @@ public class TestMb extends BaseTest {
 
     @Test
     public void test3(){
-        Page<TaskScheduler> page = taskSchedulerMapper.getTaskSchedulerrList(new TaskScheduler());
+        Page<TaskScheduler> page = taskSchedulerMapper.getTaskSchedulerList(new TaskScheduler());
         System.out.println("===>>" + page);
     }
 }
