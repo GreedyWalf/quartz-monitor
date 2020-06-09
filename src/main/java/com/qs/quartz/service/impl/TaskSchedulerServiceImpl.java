@@ -55,33 +55,29 @@ public class TaskSchedulerServiceImpl extends ServiceImpl<TaskSchedulerMapper, T
         }
 
         String jobStatus = taskScheduler.getJobStatus();
+        if (JobStatusEnum.STATUS_PAUSE.getCode().equals(jobStatus)) {
+            return;
+        }
+
         Scheduler scheduler = schedulerFactoryBean.getScheduler();
-        scheduler.resumeAll();
         CronTrigger trigger = (CronTrigger) scheduler.getTrigger(taskScheduler.getJobName(), taskScheduler.getJobGroup());
+        String concurrentFlag = taskScheduler.getIsConcurrent();
+        Class jobClass = null;
+        if (JobConcurrentStateEnum.CONCURRENT_TRUE.getCode().equals(concurrentFlag)) {
+            jobClass = StatelessJobBean.class;
+        } else {
+            jobClass = StatefulJobBean.class;
+        }
+
         //不存在，则创建一个
         if (trigger == null) {
-            String concurrentFlag = taskScheduler.getIsConcurrent();
-            Class jobClass = null;
-            if (JobConcurrentStateEnum.CONCURRENT_TRUE.getCode().equals(concurrentFlag)) {
-                jobClass = StatelessJobBean.class;
-            } else {
-                jobClass = StatefulJobBean.class;
-            }
-
             JobDetail jobDetail = new JobDetail(taskScheduler.getJobName(), taskScheduler.getJobGroup(), jobClass);
             jobDetail.getJobDataMap().put("taskScheduler", taskScheduler);
             trigger = new CronTrigger(taskScheduler.getJobName(), taskScheduler.getJobGroup(), taskScheduler.getCronExpression());
-            //判断任务状态
-            if (JobStatusEnum.STATUS_PAUSE.getCode().equals(jobStatus)) {
-                scheduler.pauseJob(taskScheduler.getJobName(), taskScheduler.getJobGroup());
-            } else {
-                scheduler.scheduleJob(jobDetail, trigger);
-            }
+            scheduler.scheduleJob(jobDetail, trigger);
         } else {  //存在，则更新cronExpression
-            trigger.setJobName(taskScheduler.getJobName());
-            trigger.setJobGroup(taskScheduler.getJobGroup());
             trigger.setCronExpression(taskScheduler.getCronExpression());
-            scheduler.scheduleJob(trigger);
+            scheduler.rescheduleJob(taskScheduler.getJobName(), taskScheduler.getJobGroup(), trigger);
         }
     }
 
@@ -109,10 +105,13 @@ public class TaskSchedulerServiceImpl extends ServiceImpl<TaskSchedulerMapper, T
                 return jsonResult;
             }
 
+            //保存更新前的jobGroup
+            taskScheduler.setOldJobGroup(taskSchedulerFromDB.getJobGroup());
             this.updateById(taskScheduler);
         }
 
         try {
+            taskScheduler = this.getById(jobId);
             this.addJob(taskScheduler);
         } catch (Exception e) {
             e.printStackTrace();
@@ -153,5 +152,21 @@ public class TaskSchedulerServiceImpl extends ServiceImpl<TaskSchedulerMapper, T
 
         jsonResult.setStatus(JsonStatus.SUCCESS);
         return jsonResult;
+    }
+
+    @Transactional
+    @Override
+    public void pauseAndResume(String jobId, String jobStatus) throws SchedulerException, ParseException {
+        TaskScheduler taskScheduler = getById(jobId);
+        Scheduler scheduler = schedulerFactoryBean.getScheduler();
+        taskScheduler.setJobStatus(jobStatus);
+        //已暂停
+        if ("1".equals(jobStatus)) {
+            updateById(taskScheduler);
+            scheduler.deleteJob(taskScheduler.getJobName(), taskScheduler.getJobGroup());
+        } else if ("0".equals(jobStatus)) {
+            updateById(taskScheduler);
+            addJob(taskScheduler);
+        }
     }
 }

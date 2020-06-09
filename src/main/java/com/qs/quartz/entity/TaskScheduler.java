@@ -46,4 +46,7 @@ public class TaskScheduler implements Serializable {
 
     @TableField(exist = false)
     private String createEndTime;
+
+    @TableField(exist = false)
+    private String oldJobGroup;
 }

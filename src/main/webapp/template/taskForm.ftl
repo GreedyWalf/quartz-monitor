@@ -23,41 +23,60 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">任务编号：</label>
                 <div class="layui-input-block">
-                    <input type="text" name="jobId" value="${(taskScheduler.jobId)!}" <#if taskScheduler??>disabled style="background:#eee;"</#if> required lay-verify="required" placeholder="请输入用户编号" autocomplete="off" class="layui-input">
+                    <input type="text" name="jobId" value="${(taskScheduler.jobId)!}" <#if taskScheduler??>disabled
+                           style="background:#eee;"</#if> required lay-verify="required" placeholder="请输入用户编号"
+                           autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">任务名称：</label>
                 <div class="layui-input-block">
-                    <input type="text" name="jobName" value="${(taskScheduler.jobName)!}" <#if taskScheduler??>disabled style="background:#eee;</#if> required lay-verify="required" placeholder="请输入任务名称" autocomplete="off" class="layui-input">
+                    <input type="text" name="jobName" value="${(taskScheduler.jobName)!}" <#if taskScheduler??>disabled
+                           style="background:#eee;</#if> required lay-verify=" required" placeholder="请输入任务名称"
+                    autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">任务分组：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="jobGroup" value="${(taskScheduler.jobGroup)!}" <#if taskScheduler??>disabled
+                           style="background:#eee;</#if> required lay-verify=" required" placeholder="请输入任务分组"
+                    autocomplete="off" class="layui-input">
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">执行类全路径：</label>
                 <div class="layui-input-block">
-                    <input type="text" name="beanClass" value="${(taskScheduler.beanClass)!}" <#if taskScheduler??>disabled style="background:#eee;</#if> placeholder="请输入执行目标类" autocomplete="off" class="layui-input">
+                    <input type="text" name="beanClass" value="${(taskScheduler.beanClass)!}"
+                           <#if taskScheduler??>disabled style="background:#eee;</#if> placeholder=" 请输入执行目标类"
+                    autocomplete="off" class="layui-input">
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">执行类实例名：</label>
                 <div class="layui-input-block">
-                    <input type="text" name="springId" value="${(taskScheduler.springId)!}" <#if taskScheduler??>disabled style="background:#eee;</#if> placeholder="请输入执行类实例名" autocomplete="off" class="layui-input">
+                    <input type="text" name="springId" value="${(taskScheduler.springId)!}"
+                           <#if taskScheduler??>disabled style="background:#eee;</#if> placeholder=" 请输入执行类实例名"
+                    autocomplete="off" class="layui-input">
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">目标方法：</label>
                 <div class="layui-input-block">
-                    <input type="text" name="methodName" value="${(taskScheduler.methodName)!}" <#if taskScheduler??>disabled style="background:#eee;</#if> placeholder="请输入执行目标方法" autocomplete="off" class="layui-input">
+                    <input type="text" name="methodName" value="${(taskScheduler.methodName)!}"
+                           <#if taskScheduler??>disabled style="background:#eee;</#if> placeholder=" 请输入执行目标方法"
+                    autocomplete="off" class="layui-input">
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">定时任务表达式：</label>
                 <div class="layui-input-block">
-                    <input type="text" name="cronExpression" value="${(taskScheduler.cronExpression)!}" placeholder="请输入执行目标方法" autocomplete="off" class="layui-input">
+                    <input type="text" name="cronExpression" value="${(taskScheduler.cronExpression)!}"
+                           placeholder="请输入执行目标方法" autocomplete="off" class="layui-input">
                 </div>
             </div>
 
@@ -66,8 +85,10 @@
                 <div class="layui-input-block">
                     <select name="isConcurrent" lay-verify="required">
                         <option value=""></option>
-                        <option value="0" <#if taskScheduler?? && taskScheduler.isConcurrent=='0'>selected</#if> >是</option>
-                        <option value="1" <#if taskScheduler?? && taskScheduler.isConcurrent=='1'>selected</#if> >否</option>
+                        <option value="0" <#if taskScheduler?? && taskScheduler.isConcurrent=='0'>selected</#if> >是
+                        </option>
+                        <option value="1" <#if taskScheduler?? && taskScheduler.isConcurrent=='1'>selected</#if> >否
+                        </option>
                     </select>
                 </div>
             </div>
@@ -75,7 +96,8 @@
             <div class="layui-form-item layui-form-text">
                 <label class="layui-form-label">任务描述：</label>
                 <div class="layui-input-block">
-                    <textare id="description" name="description" placeholder="请输入任务描述" autocomplete="off"  class="layui-textarea"></textare>
+                    <textarea id="description" name="description" placeholder="请输入任务描述" autocomplete="off"
+                              class="layui-textarea">${(taskScheduler.description)!}</textarea>
                 </div>
             </div>
 
@@ -109,18 +131,20 @@
         $("#btnEnter").click(function () {
             var $deptForm = $("#addDeptForm");
             var jobId = $deptForm.find("input[name='jobId']").val();
-            var jobName = $deptForm.find("input[name='userName']").val();
+            var jobName = $deptForm.find("input[name='jobName']").val();
+            var jobGroup = $deptForm.find("input[name='jobGroup']").val();
             var beanClass = $deptForm.find("input[name='beanClass']").val();
             var springId = $deptForm.find("input[name='springId']").val();
             var methodName = $deptForm.find("input[name='methodName']").val();
             var cronExpression = $deptForm.find("input[name='cronExpression']").val();
-            var isConcurrent = $deptForm.find("input[name='isConcurrent']:checked").val();
+            var isConcurrent = $deptForm.find("select[name='isConcurrent']").val();
             var description = $("#description").val();
 
 
             var param = {
                 jobId: jobId,
                 jobName: jobName,
+                jobGroup: jobGroup,
                 beanClass: beanClass,
                 springId: springId,
                 methodName: methodName,

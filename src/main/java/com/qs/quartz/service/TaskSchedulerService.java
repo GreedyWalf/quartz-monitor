@@ -27,4 +27,5 @@ public interface TaskSchedulerService extends IService<TaskScheduler> {
 
     JsonResult batchDeleteByJobIds(List<String> jobIdList);
 
+    void pauseAndResume(String jobId, String jobStatus) throws SchedulerException, ParseException;
 }

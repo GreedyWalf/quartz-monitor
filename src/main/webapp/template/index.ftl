@@ -22,7 +22,7 @@
                     <a class="" href="javascript:;">定时任务管理</a>
                     <dl class="layui-nav-child blog-manage-nav">
                         <dd><a href="javascript:;" id="task-manage" data-type="tabAdd">任务管理</a></dd>
-                        <dd><a href="javascript:;" id="category-manage" data-type="tabAdd">执行明细</a></dd>
+                        <dd><a href="javascript:;" id="task-execute-manage" data-type="tabAdd">执行明细</a></dd>
                     </dl>
                 </li>
             </ul>
@@ -70,6 +70,17 @@
                 var content;
                 $.ajax({
                     url: '${ctx}/taskManage',
+                    type: 'GET',
+                    async: true,
+                    success: function (data) {
+                        content = data;
+                        active[dataType] ? active[dataType].call(this, $this, content) : '';
+                    }
+                });
+            } else if ($this.attr("id") === "task-execute-manage") {
+                var content;
+                $.ajax({
+                    url: '${ctx}/taskDetailManage',
                     type: 'GET',
                     async: true,
                     success: function (data) {

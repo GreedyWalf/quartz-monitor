@@ -13,5 +13,5 @@ import java.util.List;
 public interface TaskExecuteDetailService extends IService<TaskExecuteDetail> {
 
 
-
+    Page<TaskExecuteDetail> getTaskDetailList(Page<TaskExecuteDetail> page, TaskExecuteDetail taskExecuteDetail);
 }

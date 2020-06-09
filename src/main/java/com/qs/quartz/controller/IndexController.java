@@ -7,12 +7,14 @@ import com.qs.quartz.service.TaskSchedulerService;
 import com.qs.quartz.utils.JsonResult;
 import com.qs.quartz.utils.PageUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.quartz.SchedulerException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -36,8 +38,8 @@ public class IndexController {
     @RequestMapping(value = "/getTaskSchedulerList")
     @ResponseBody
     public Map<String, Object> getTaskSchedulerList(Page<TaskScheduler> page, TaskScheduler taskScheduler) {
-        Page<TaskScheduler> deptsPage = taskSchedulerService.getTaskSchedulerList(page, taskScheduler);
-        PageInfo<TaskScheduler> pageInfo = new PageInfo<>(deptsPage);
+        Page<TaskScheduler> taskSchedulerPage = taskSchedulerService.getTaskSchedulerList(page, taskScheduler);
+        PageInfo<TaskScheduler> pageInfo = new PageInfo<>(taskSchedulerPage);
         return PageUtils.wrapPageDataToMap(pageInfo);
     }
 
@@ -66,6 +68,15 @@ public class IndexController {
     public JsonResult delete(String jobIds) {
         List<String> jobIdList = Arrays.asList(jobIds.split(","));
         return taskSchedulerService.batchDeleteByJobIds(jobIdList);
+    }
+
+
+    @RequestMapping(value = "/pauseAndResume")
+    @ResponseBody
+    public JsonResult pauseAndResume(String jobId, String jobStatus) throws Exception {
+        JsonResult jsonResult = new JsonResult();
+        taskSchedulerService.pauseAndResume(jobId, jobStatus);
+        return jsonResult;
     }
 
 }
