@@ -11,9 +11,9 @@
         <package name="com.qs.quartz.entity"/>
     </typeAliases>
 
+    <!-- 使用pageHelper分页 -->
     <plugins>
         <plugin interceptor="com.github.pagehelper.PageHelper">
-            <!-- 设置数据库类型Oracle,Mysql,MariaDB,SQLite,Hsqldb,PostgreSQL六种数据库-->
             <property name="dialect" value="mysql"/>
         </plugin>
     </plugins>
