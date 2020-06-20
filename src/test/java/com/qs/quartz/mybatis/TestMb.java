@@ -7,7 +7,6 @@ import com.qs.quartz.service.UserService;
 import com.qs.quartz.service.mapper.TaskScheduleDetailMapper;
 import com.qs.quartz.service.mapper.TaskScheduleMapper;
 import com.qs.quartz.service.mapper.UserMapper;
-import com.qs.quartz.utils.Apple;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -27,9 +26,6 @@ public class TestMb extends BaseTest {
 
     @Autowired
     private TaskScheduleDetailMapper taskScheduleDetailMapper;
-
-    @Autowired
-    private Apple apple;
 
     @Test
     public void test2() {
@@ -98,11 +94,5 @@ public class TestMb extends BaseTest {
     public void test4(){
         User user = userService.getUserByUserId("1111");
         System.out.println(user);
-    }
-
-
-    @Test
-    public void test5(){
-        apple.eat();
     }
 }

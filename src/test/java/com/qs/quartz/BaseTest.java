@@ -21,7 +21,7 @@ public class BaseTest {
     private UserMapper userMapper;
 
     @Test
-    public void test() {
+    public void test() throws Exception {
         System.out.println("--->>>userService=" + userService);
         System.out.println("---->>>>userMapper=" + userMapper);
     }

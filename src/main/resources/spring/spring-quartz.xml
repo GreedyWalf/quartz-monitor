@@ -4,9 +4,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <!-- 定时任务入口 -->
-    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+    <bean id="schedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <property name="configLocation" value="classpath:/quartz.properties"/>
-        <!--<property name="schedulerFactoryClass" value="com.qs.quartz.utils.StdSchedulerFactoryProxy"/>-->
         <property name="triggers">
             <list>
                 <ref bean="myTrigger"/>
