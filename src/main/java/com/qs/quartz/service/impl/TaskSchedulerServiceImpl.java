@@ -169,4 +169,10 @@ public class TaskSchedulerServiceImpl extends ServiceImpl<TaskSchedulerMapper, T
             addJob(taskScheduler);
         }
     }
+
+    @Override
+    @Transactional
+    public TaskScheduler getTaskById(String jobId) {
+        return getById(jobId);
+    }
 }
